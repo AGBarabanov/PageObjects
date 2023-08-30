@@ -28,18 +28,10 @@ public class RegistrationTest {
         registrationPage.setBirthDateDay("21");
         registrationPage.setBirthDateMonth("Июль");
         registrationPage.setBirthDateYear("1995");
-
-
-        $("[data-test-id = gender-form-field-inner]").find(byText("Мужской")).click();
-        $("[data-test-id = account__input]").setValue("antonanton2171995");
-        $("[data-test-id = account__select]").click();
-        $("[data-test-id = select-menu-wrapper]").find(byText("@internet.ru")).click();
-        $("[data-test-id = password-input]").setValue("r4q1e3W2!12199");
-        $("[data-test-id = password-confirm-input]").setValue("r4q1e3W2!12199");
-        $("[data-test-id = phone-input]").setValue("79271927399");
+        registrationPage.setGender("Мужской");
+        registrationPage.setEmail("antonanton2171995", "@internet.ru");
+        registrationPage.setPassword("r4q1e3W2!12199");
+        registrationPage.setPasswordConfirm("r4q1e3W2!12199");
+        registrationPage.setPhoneNumber("79271927399");
     }
-
-
-
-
 }
