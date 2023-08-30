@@ -1,16 +1,16 @@
 package ru.mail.Tests;
 
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import ru.mail.Pages.RegistrationPage;
 
-import static com.codeborne.selenide.Condition.focused;
 import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
 
 public class RegistrationTest {
+    RegistrationPage registrationPage = new RegistrationPage();
+
     @BeforeAll
     public static void setUp() {
         Configuration.browser = "firefox";
@@ -20,19 +20,23 @@ public class RegistrationTest {
 
     @Test
     void fillRegistrationForm(){
-        open("/signup");
 
-        $("#fname").setValue("Anton");
-        $("[data-test-id = last-name]").setValue("Barabanov"); // Поиск по test-id
-        $("[data-test-id = birth-date__day").click();
-        $("[data-test-id=select-menu-wrapper]").find(byText("21")).click();
-        $("[data-test-id = birth-date__month").click();
-        $("[data-test-id=select-menu-wrapper]").find(byText("Июль")).click();
-        $("[data-test-id = birth-date__year").click();
-        $("[data-test-id=select-menu-wrapper]").find(byText("1995")).click();
+        registrationPage.openPage();
+
+        registrationPage.setFirstName("Anton");
+        registrationPage.setLastName("Barabanov");
+        registrationPage.setBirthDateDay("21");
+        registrationPage.setBirthDateMonth("Июль");
+        registrationPage.setBirthDateYear("1995");
+
+
         $("[data-test-id = gender-form-field-inner]").find(byText("Мужской")).click();
-
-
+        $("[data-test-id = account__input]").setValue("antonanton2171995");
+        $("[data-test-id = account__select]").click();
+        $("[data-test-id = select-menu-wrapper]").find(byText("@internet.ru")).click();
+        $("[data-test-id = password-input]").setValue("r4q1e3W2!12199");
+        $("[data-test-id = password-confirm-input]").setValue("r4q1e3W2!12199");
+        $("[data-test-id = phone-input]").setValue("79271927399");
     }
 
 
