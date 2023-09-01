@@ -1,37 +1,30 @@
 package ru.mail.Tests;
 
-import com.codeborne.selenide.Configuration;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import ru.mail.Pages.RegistrationPage;
 
-import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.*;
-
-public class RegistrationTest {
-    RegistrationPage registrationPage = new RegistrationPage();
-
-    @BeforeAll
-    public static void setUp() {
-        Configuration.browser = "firefox";
-        Configuration.browserSize = "1920x1080";
-        Configuration.baseUrl="https://account.mail.ru";
-    }
+public class RegistrationTest extends TestBase{
 
     @Test
     void fillRegistrationForm(){
 
-        registrationPage.openPage();
+        registrationPage.openPage()
+                .setFirstName("Anton")
+                .setLastName("Barabanov")
+                /*
+                Выделили календарь в отдельный компонент
+                .setBirthDate("15", "Сентябрь", "2023")
+                */
+                .setBirthDateDay("21")
+                .setBirthDateMonth("Июль")
+                .setBirthDateYear("1995")
+                .setGender("Мужской")
+                .setEmail("antonanton2171995", "@internet.ru")
+                .setPassword("r4q1e3W2!12199")
+                .setPasswordConfirm("r4q1e3W2!12199")
+                .setPhoneNumber("79271927399");
 
-        registrationPage.setFirstName("Anton");
-        registrationPage.setLastName("Barabanov");
-        registrationPage.setBirthDateDay("21");
-        registrationPage.setBirthDateMonth("Июль");
-        registrationPage.setBirthDateYear("1995");
-        registrationPage.setGender("Мужской");
-        registrationPage.setEmail("antonanton2171995", "@internet.ru");
-        registrationPage.setPassword("r4q1e3W2!12199");
-        registrationPage.setPasswordConfirm("r4q1e3W2!12199");
-        registrationPage.setPhoneNumber("79271927399");
+        registrationPage.verifyResoltsModalAppear()
+                .verifyResult("Student Name", "Anton Barabanov")
+                .verifyResult("Student Email", "anton.barabanov@gmail.com");
     }
 }

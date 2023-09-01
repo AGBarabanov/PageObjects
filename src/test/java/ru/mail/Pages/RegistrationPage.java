@@ -1,15 +1,20 @@
 package ru.mail.Pages;
 
 import com.codeborne.selenide.SelenideElement;
+import ru.mail.Pages.components.CalendarComponent;
+import ru.mail.Pages.components.RegistrationResultsModal;
 
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
 public class RegistrationPage {
+    CalendarComponent calendarComponent = new CalendarComponent();
+    RegistrationResultsModal registrationResultsModal = new RegistrationResultsModal();
+
     private SelenideElement
             firstNameInput = $("#fname"),
-            lastNameInput = $("[data-test-id = last-name]"),
+            lastNameInput = $("#lname"),
             selectMenuWrapper = $("[data-test-id = select-menu-wrapper]"),
             birthDateDay = $("[data-test-id = birth-date__day"),
             birthDateMonth = $("[data-test-id = birth-date__month"),
@@ -21,52 +26,93 @@ public class RegistrationPage {
             passwordInputConfirm = $("[data-test-id = password-confirm-input]"),
             phoneNumberInput = $("[data-test-id = phone-input]");
 
-    public void openPage(){
+    public RegistrationPage openPage(){
         open("/signup");
+
+        return this;
     }
 
-    public void setFirstName(String value){
+    public RegistrationPage setFirstName(String value){
         firstNameInput.setValue(value);
+
+        return this;
     }
 
-    public void setLastName(String value){
+    public RegistrationPage setLastName(String value){
         lastNameInput.setValue(value);
+
+        return this;
     }
 
-    public void setBirthDateDay(String value){
+    public RegistrationPage setBirthDateDay(String value){
         birthDateDay.click();
         selectMenuWrapper.find(byText(value)).click();
+
+        return this;
     }
 
-    public void setBirthDateMonth(String value){
+    public RegistrationPage setBirthDateMonth(String value){
         birthDateMonth.click();
         selectMenuWrapper.find(byText(value)).click();
+
+        return this;
     }
 
-    public void setBirthDateYear(String value){
+    public RegistrationPage setBirthDateYear(String value){
         birthDateYear.click();
         selectMenuWrapper.find(byText(value)).click();
+
+        return this;
     }
 
-    public void setGender(String value){
+    public RegistrationPage setGender(String value){
         genderRadiobutton.find(byText(value)).click();
+
+        return this;
     }
 
-    public void setEmail(String valueName, String valueDomen){
+    public RegistrationPage setEmail(String valueName, String valueDomen){
         emailInput.setValue(valueName);
         domenDropdown.click();
         selectMenuWrapper.find(byText(valueDomen)).click();
+
+        return this;
     }
 
-    public void setPassword(String value){
+    public RegistrationPage setPassword(String value){
         passwordInput.setValue(value);
+
+        return this;
     }
 
-    public void setPasswordConfirm(String value){
+    public RegistrationPage setPasswordConfirm(String value){
         passwordInputConfirm.setValue(value);
+
+        return this;
     }
 
-    public void setPhoneNumber(String value){
+    public RegistrationPage setPhoneNumber(String value){
         phoneNumberInput.setValue(value);
+
+        return this;
+    }
+
+    public RegistrationPage setBirthDate(String day, String month, String year){
+        $("#dateOfBirthInput").click();
+        calendarComponent.setDate(day, month, year);
+
+        return this;
+    }
+
+    public RegistrationPage verifyResoltsModalAppear(){
+        registrationResultsModal.verifyModalAppear();
+
+        return this;
+    }
+
+    public RegistrationPage verifyResult(String key, String value){
+        registrationResultsModal.verifyResult(key, value);
+
+        return this;
     }
 }
